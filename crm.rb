@@ -5,5 +5,5 @@
 require 'sinatra'
 
 get '/' do
-  'Main menu'
+  erb :index
 end
