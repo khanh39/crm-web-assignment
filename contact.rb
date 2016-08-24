@@ -84,12 +84,13 @@ class Contact
   # This method should accept an id as an argument
   # and return the contact who has that id
   def self.find(id)
-    @@contacts.each do |contact|
-      if id == contact.id
-        return contact
-      end
-    end
-    return nil
+    @@contacts.find { |contact| contact.id == id}
+    # @@contacts.each do |contact|
+      # if id == contact.id
+      #   return contact
+    #   end
+      # end
+    # return nil
   end
 
   def main_menu
