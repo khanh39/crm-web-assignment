@@ -7,10 +7,10 @@ require_relative "contact"
 require 'sinatra'
 
 # Temporary fake data so that we always find contact with id 1.
-Contact.create('Johnny', 'Bravo', 'johnny@bitmakerlabs.com', 'Rockstar Games')
-Contact.create('Mark', 'Zuckerberg', 'mark@facebook.com', 'CEO')
-Contact.create('Sergey', 'Brin', 'sergey@google.com', 'Co-Founder')
-Contact.create('Steve', 'Jobs', 'steve@apple.com', 'Visionary')
+  # Contact.create('Johnny', 'Bravo', 'johnny@bitmakerlabs.com', 'Rockstar Games')
+  # Contact.create('Mark', 'Zuckerberg', 'mark@facebook.com', 'CEO')
+  # Contact.create('Sergey', 'Brin', 'sergey@google.com', 'Co-Founder')
+  # Contact.create('Steve', 'Jobs', 'steve@apple.com', 'Visionary')
 
 
 get '/' do
@@ -48,4 +48,34 @@ get '/contacts/:id' do
   else
     raise Sinatra::NotFound
   end
+end
+
+put '/contacts/:id' do
+  @contact = Contact.find(params[:id].to_i)
+  if @contact
+    @contact.first_name = params[:first_name]
+    @contact.last_name = params[:last_name]
+    @contact.email = params[:email]
+    @contact.note = params[:note]
+
+    redirect to('/contacts')
+  else
+    raise Sinatra::NotFound
+  end
+
+  delete '/contacts/:id' do
+    @contact = Contact.find(params[:id].to_i)
+
+    if @contact
+      @contact.delete
+      redirect to('/contacts')
+    else
+      raise Sinatra::NotFound
+    end
+
+  end
+end
+
+after do
+  ActiveRecord::Base.connection.close
 end
