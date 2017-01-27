@@ -36,7 +36,7 @@ contact = Contact.create(
   note:       params[:note]
   )
   redirect to('/contacts')
-end
+end 
 
 get '/contacts/:id/edit' do
   @contact = Contact.find(params[:id].to_i)
